@@ -23,7 +23,7 @@ body{
 }
 
 :where(.css-dev-only-do-not-override-17a39f8).ant-row {
-  display: inline;
+  display: inline !important;
   flex-flow: row wrap;
   min-width: 0;
 }
