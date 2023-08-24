@@ -1,6 +1,11 @@
 import { Button, Form, Input, Modal, Table, Upload } from "antd";
-import { useState } from "react";
-import { DeleteOutlined, EditOutlined, ExclamationCircleFilled, InboxOutlined } from "@ant-design/icons";
+import { useState, useEffect } from "react";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ExclamationCircleFilled,
+  InboxOutlined,
+} from "@ant-design/icons";
 import { toast } from "react-toastify";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { ROLE, USER_ID } from "../../utils";
@@ -12,7 +17,7 @@ const { confirm } = Modal;
 
 const Portfolios = () => {
   const [current, setCurrentPage] = useState(1);
-  const [save, setSave] = useState("");
+  const [save, setSave] = useState([]); // Initialize with an empty array
   const {
     data: portfolios,
     loading,
@@ -21,11 +26,16 @@ const Portfolios = () => {
   } = useFetch(
     `portfolios${
       ROLE === "client" ? `?user[in]=${USER_ID}` : ""
-    }/?page=${current}&limit=5`
+    }&page=${current}&limit=5`
   );
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selected, setSelected] = useState(null);
+
+  useEffect(() => {
+    getPortfolios(); // Fetch portfolios on component mount
+  }, [current]);
+
   const columns = [
     {
       title: "Name",
@@ -62,10 +72,7 @@ const Portfolios = () => {
       width: 200,
       render: ({ _id, name }) => (
         <div className="d-flex gap-2">
-          <Button
-            type="primary"
-            onClick={() => editPortfolio(_id)} // Removed 'name' parameter
-          >
+          <Button type="primary" onClick={() => editPortfolio(_id)}>
             <EditOutlined />
           </Button>
           &nbsp;&nbsp;
@@ -81,30 +88,44 @@ const Portfolios = () => {
     },
   ];
 
+  const saveData = (values) => {
+    values["photo"] = save?._id || "";
+    if (selected) {
+      request.put(`portfolios/${selected}`, values).then(() => {
+        getPortfolios();
+        setIsModalOpen(false);
+      });
+    } else {
+      request.post("portfolios", values).then(() => {
+        getPortfolios();
+        setIsModalOpen(false);
+      });
+    }
+  };
+
   const showModal = () => {
     setIsModalOpen(true);
   };
 
   const normFile = (e) => {
-    const form = new FormData();
-    form.append("file", e.fileList[0].originFileObj);
-    requestImage.post("upload", form).then((res) => {
-      setSave(res);
+    const formData = new FormData();
+    formData.append("file", e.fileList[0].originFileObj);
+    requestImage.post("upload", formData).then((res) => {
+      setSave(res.data); // Store the uploaded file data
     });
   };
 
   const handleOk = () => {
     form.validateFields().then((values) => {
-      values["photo"] = `${save?.data?._id || ""}`;
+      values["photo"] = save?._id || "";
       if (selected) {
-        request.put(`portfolios/${selected}`, values).then((data) => {
-          console.log(data);
+        request.put(`portfolios/${selected}`, values).then(() => {
           getPortfolios();
           setIsModalOpen(false);
+          saveData(values);
         });
       } else {
-        request.post("portfolios", values).then((res) => {
-          console.log(res);
+        request.post("portfolios", values).then(() => {
           getPortfolios();
           setIsModalOpen(false);
         });
@@ -112,22 +133,25 @@ const Portfolios = () => {
     });
   };
 
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
   const openFormModal = () => {
     showModal();
     setSelected(null);
     form.resetFields();
   };
-  function editPortfolio(id) {
-    showModal();
-    setSelected(id);
+
+  // Modified editPortfolio function
+  const editPortfolio = (id) => {
     request.get(`portfolios/${id}`).then((res) => {
+      showModal();
+      setSelected(id);
       form.setFieldsValue(res.data);
     });
-  }
+  };
+
   function deletePortfolio(id, name) {
     confirm({
       title: `Do you Want to delete ${name}?`,
@@ -142,6 +166,7 @@ const Portfolios = () => {
       },
     });
   }
+
   return (
     <>
       <Table

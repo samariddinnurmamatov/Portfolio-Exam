@@ -2,14 +2,14 @@ import { Layout, Menu, theme } from "antd";
 import React, { useState } from "react";
 import { TOKEN, USER } from "../../../const";
 import { adminRoutes } from "../../../const/menus";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { CloseOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import PropTypes from 'prop-types'; 
+// import PropTypes from 'prop-types'; 
 
 
 const { Header, Sider, Content } = Layout;
 
-const AdminLayout = ({children}) => {
+const AdminLayout = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -83,15 +83,15 @@ const AdminLayout = ({children}) => {
             background: colorBgContainer,
           }}
         >
-          {children}
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
   );
 };
 
-AdminLayout.propTypes = {
-  children: PropTypes.node.isRequired, // children prop validation
-};
+// AdminLayout.propTypes = {
+//   children: PropTypes.node.isRequired, // children prop validation
+// };
 
 export default AdminLayout;

@@ -25,17 +25,25 @@ const Header = () => {
           {isAuthorizedUser ? (
             <Fragment>
               <Link to="skils" className="nav_link">
-                SkillsPage
+                SkillsP
               </Link>
               <Link to="resume" className="nav_link">
-                ResumePage
+                ResumeP
+              </Link>
+              <Link to="portfolio" className="nav_link">
+                PortfoliosP
               </Link>
             </Fragment>
           ) : (
             ""
           )}
           {isAuthorizedUser ? (
-            <Link style={{border: "1px solid gray", padding: "5px 5px"}} to="login" className="nav_link" onClick={log_out}>
+            <Link
+              style={{ border: "1px solid gray", padding: "5px 5px" }}
+              to="login"
+              className="nav_link"
+              onClick={log_out}
+            >
               Logout
             </Link>
           ) : (
