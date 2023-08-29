@@ -36,19 +36,19 @@ const Header = () => {
           {isAuthorizedUser ? (
             <Fragment>
               <Link to="skils" className="nav_link">
-                SkillsP
+                Skills
               </Link>
               <Link to="resume" className="nav_link">
-                ResumeP
+                Resume
               </Link>
               <Link to="portfolio" className="nav_link">
-                PortfoliosP
+                Portfolios
               </Link>
               <Link to="testmonial" className="nav_link">
-                TestmonialP
+                Testmonial
               </Link>
               <Link to="contact" className="nav_link">
-                ContactP
+                Contact
               </Link>
             </Fragment>
           ) : (
@@ -78,19 +78,19 @@ const Header = () => {
           {isAuthorizedUser ? (
             <Fragment>
               <Link to="skils" className="nav_link">
-                SkillsP
+                Skills
               </Link>
               <Link to="resume" className="nav_link">
-                ResumeP
+                Resume
               </Link>
               <Link to="portfolio" className="nav_link">
-                PortfoliosP
+                Portfolios
               </Link>
               <Link to="testmonial" className="nav_link">
-                TestmonialP
+                Testmonial
               </Link>
               <Link to="contact" className="nav_link">
-                ContactP
+                Contact
               </Link>
             </Fragment>
           ) : (
