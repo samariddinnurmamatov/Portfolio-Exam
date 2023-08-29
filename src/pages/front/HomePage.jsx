@@ -22,6 +22,7 @@ const HomePage = () => {
                 </h2>
                 <br />
                 <h3 style={{color: "rgb(180, 174, 174)"}}>I'm From Uzbekistan</h3>
+                <h3 style={{color: "rgb(180, 174, 174)", paddingTop: "8px"}}>I'm Frontend Developer</h3>
                 <br />
                 <div className="home_icon_flex">
                   <div className="icon_border">
