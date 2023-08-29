@@ -15,7 +15,7 @@ export const request = axios.create({
 
 
 export const requestImage = axios.create({
-  baseURL: IMAGE_URL,
+  baseURL: ENDPOINT,
   timeout: 10000,
   headers: {
     "Content-type": "multipart/form-data",

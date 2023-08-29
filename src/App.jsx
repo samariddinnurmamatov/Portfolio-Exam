@@ -2,13 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserLayout from "./components/layout/front/UserLayout";
 import Login from "./pages/front/Login";
 import Register from "./pages/front/Register.jsx";
-// import Cookies from "js-cookie";
-// import { Fragment } from "react";
-// import AdminPanel from "./components/layout/admin/AdminPanel";
-// import Skilspage from "./pages/admin/Dashboard";
 import { TOKEN } from "./const";
 import { ROLE } from "./utils";
-import { adminRoutes } from "./const/menus";
 import AdminLayout from "./components/layout/admin/AdminPanel";
 import SkillsPage from "./pages/front/SkillsPage";
 import HomePage from "./pages/front/HomePage";
@@ -21,7 +16,6 @@ import NotFoundPage from "./pages/NotFoundPage";
 import ContactPage from "./pages/front/ContactPage";
 import Account from "./pages/admin/Account";
 
-// import { TOKEN, USER } from "./const";
 
 function App() {
   const isAuthorized = localStorage.getItem(TOKEN) && ROLE !== "user";
