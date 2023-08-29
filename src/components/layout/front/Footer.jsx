@@ -1,3 +1,4 @@
+import { FacebookOutlined, InstagramOutlined, LinkedinOutlined } from "@ant-design/icons";
 import "./footer.css";
 
 // import telegram from '../../assets/telegram.png';
@@ -23,20 +24,20 @@ const Footer = () => {
         </div>
         <ul>
           <li>
-            <a>
-              <p>Instagram</p>
+            <a style={{ fontSize: "22px" }}>
+              <InstagramOutlined />
             </a>
           </li>
           <li>
-            <a>
+            <a style={{ fontSize: "22px" }}>
               {/* <Image className="footer-icons" src={facebook} alt="Facebook" /> */}
-              <p>Facebook</p>
+              <FacebookOutlined />
             </a>
           </li>
           <li>
-            <a>
+            <a style={{ fontSize: "22px" }}>
               {/* <Image className="footer-icons" src={lnk} alt="linkidin" /> */}
-              <p>Linkidin</p>
+              <LinkedinOutlined />
             </a>
           </li>
         </ul>

@@ -25,7 +25,10 @@ const AdminLayout = () => {
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div style={{ color: "white", textAlign: "center", padding: "20px 5px" }} className="logo">
+        <div
+          style={{ color: "white", textAlign: "center", padding: "20px 5px" }}
+          className="logo"
+        >
           LOGO
         </div>
         <Menu
@@ -68,9 +71,19 @@ const AdminLayout = () => {
             }}
           >
             <Link to="/">User-Info</Link>
-            <button className="logoutBtn" onClick={logout}>
+            <button
+              style={{
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "transparent",
+                padding: "4px",
+              }}
+              className="logoutBtn"
+              onClick={logout}
+            >
               {/* <HiOutlineLogout className="logoutSvg" /> */}
               <CloseOutlined />
+              <span>Logout</span>
               {/* Logout */}
             </button>
           </div>

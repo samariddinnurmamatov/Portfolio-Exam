@@ -9,7 +9,7 @@ const { useForm } = Form;
 const { TextArea } = Input;
 console.log(TextArea);
 
-const Dashboard = () => {
+const Account = () => {
   let items = [
     {
       label: "Information",
@@ -65,8 +65,7 @@ const Information = () => {
   const submit = async (values) => {
     try {
       setLoading(true);
-      const response = await request.put("auth/update", values);
-      message.success("Edited succesfully");
+      const response = await request.put("auth/updatedetails", values);
       if (response && response.data) {
         message.success("Information saved successfully!");
         setUserData(response.data);
@@ -162,7 +161,7 @@ const Password = () => {
   const submit = async (values) => {
     try {
       setLoading(true);
-      const response = await request.put("auth/password", values);
+      const response = await request.put("auth/updatepassword", values);
 
       if (response && response.data) {
         message.success("Password changed successfully!");
@@ -220,4 +219,4 @@ const Password = () => {
   );
 };
 
-export default Dashboard;
+export default Account;

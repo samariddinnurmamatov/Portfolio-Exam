@@ -12,10 +12,14 @@ import { adminRoutes } from "./const/menus";
 import AdminLayout from "./components/layout/admin/AdminPanel";
 import SkillsPage from "./pages/front/SkillsPage";
 import HomePage from "./pages/front/HomePage";
-import Resume from "./pages/front/Resume";
-import { Dashboard, Experiences, Messages, Portfolios, Skills, Users } from "./pages/admin";
+import ResumePage from "./pages/front/ResumePage";
+import { Experiences, Portfolios, Skills, Users } from "./pages/admin";
 import Education from "./pages/admin/Education";
 import PortfoliosPage from "./pages/front/PortfoliosPage";
+import TestmonialPage from "./pages/front/TestmonialPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import ContactPage from "./pages/front/ContactPage";
+import Account from "./pages/admin/Account";
 
 // import { TOKEN, USER } from "./const";
 
@@ -28,40 +32,26 @@ function App() {
         <Route path="/" element={<UserLayout />}>
           <Route index element={<HomePage />} />
           <Route path="skils" element={<SkillsPage />} />
-          <Route path="resume" element={<Resume />} />
+          <Route path="resume" element={<ResumePage />} />
           <Route path="portfolio" element={<PortfoliosPage />} />
+          <Route path="testmonial" element={<TestmonialPage />} />
+          <Route path="contact" element={<ContactPage />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>
 
         {isAuthorized && (
           <Route path="/" element={<AdminLayout />}>
-            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="account" element={<Account />} />
             <Route path="education" element={<Education />} />
             <Route path="experiences" element={<Experiences />} />
-            <Route path="messages" element={<Messages />} />
             <Route path="portfolios" element={<Portfolios />} />
             <Route path="skills" element={<Skills />} />
             <Route path="users" element={<Users />} />
           </Route>
         )}
-        {/* <Route path="*" element={<NotFoundP />} /> */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
-
-      {/* <Routes>
-        {isAuthorized &&
-          adminRoutes.map(({ url, page: Page }, i) => (
-            <Route
-              key={i}
-              path={"/" + url}
-              element={
-                <AdminLayout>
-                  <Page />
-                </AdminLayout>
-              }
-            />
-          ))}
-      </Routes> */}
     </BrowserRouter>
   );
 }

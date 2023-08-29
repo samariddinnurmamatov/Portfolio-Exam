@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ENDPOINT, TOKEN } from "../const";
+import { ENDPOINT, IMAGE_URL, TOKEN } from "../const";
 // import Cookies from "js-cookie";
 
 const token = localStorage.getItem(TOKEN);
@@ -15,7 +15,7 @@ export const request = axios.create({
 
 
 export const requestImage = axios.create({
-  baseURL: ENDPOINT,
+  baseURL: IMAGE_URL,
   timeout: 10000,
   headers: {
     "Content-type": "multipart/form-data",

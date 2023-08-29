@@ -18,3 +18,61 @@
   /* color: black; */
 }
 
+
+
+.toggle{
+  display: none;
+}
+.mini_sidebar{
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 65px;
+  top: 75px;
+  right: -100px;
+  background-color: rgba(35, 37, 54, 1);
+  height: auto;
+  padding: 50px 20px;
+  width: 0%;
+  text-align: center;
+  transition: .5s ease;
+  z-index: 9999;
+}
+
+.mini_sidebar .lnk{
+  color: white;
+  text-decoration: none;
+}
+.mini_sidebar .login{
+  text-decoration: none;
+  color: black;
+  background-color: white;
+  padding: 7px 20px;
+  font-size: 14px;
+}
+
+@media (max-width: 650px) {
+  .hd{
+    display: none !important;
+  }
+  .toggle{
+    display: block;
+  }
+  .mini_sidebar.active{
+    z-index: 999;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 20px;
+    top: 77px;
+    right: 0;
+    background-color: rgba(35, 37, 54, 1);
+    height: auto;
+    padding: 50px 20px;
+    width: 100%;
+    text-align: center;
+    z-index: 9999;
+  }
+}

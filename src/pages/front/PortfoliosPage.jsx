@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { TOKEN } from "../../const";
+import { IMAGE_URL, TOKEN } from "../../const";
 import { ROLE, USER_ID } from "../../utils";
 import { toast } from "react-toastify";
+import Loading from "../../components/Loading";
+import { Link } from "react-router-dom";
 
 const PortfoliosPage = () => {
   const [portfolios, setPortfolios] = useState([]);
@@ -40,25 +42,31 @@ const PortfoliosPage = () => {
   return (
     <div className="container" style={{ padding: "100px 15px" }}>
       {isLoading ? (
-        <div>Loading...</div> // Display loading state
+        <Loading /> // Display loading state
       ) : (
         <div>
           {isAuthorized ? (
             <div>
               <h2 style={{ textAlign: "center" }}>My Portfolios</h2>
+              <br />
               {portfolios.length > 0 ? (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "20px",
-                    padding: "20px 0",
-                  }}
-                >
+                <div className="portfolio_all_card">
                   {portfolios.map((portfolio) => (
                     <div key={portfolio._id} className="portfolio-item">
+                      <img
+                        src={`${
+                          IMAGE_URL +
+                          portfolio.photo._id +
+                          "." +
+                          portfolio.photo.name.split(".")[1]
+                        }`}
+                      />
+
                       <h4>{portfolio.name}</h4>
-                      <p>{portfolio.url}</p>
+                      <h5>{portfolio.description}</h5>
+                      <Link to={portfolio.url}>
+                        <span style={{ color: "black" }}>Link</span>
+                      </Link>
                       {/* You can add more details about each portfolio here */}
                     </div>
                   ))}

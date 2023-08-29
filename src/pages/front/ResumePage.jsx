@@ -2,8 +2,9 @@ import { useState, useEffect, Fragment } from "react";
 import { TOKEN } from "../../const";
 import { ROLE, USER_ID } from "../../utils";
 import { toast } from "react-toastify";
+import Loading from "../../components/Loading";
 
-const Resume = () => {
+const ResumePage = () => {
   const [experiences, setExperiences] = useState([]);
   const [education, setEducation] = useState([]); // State for education
   const [isLoading, setIsLoading] = useState(true); // Track loading state
@@ -62,13 +63,20 @@ const Resume = () => {
   return (
     <div className="container" style={{ padding: "100px 15px" }}>
       {isLoading ? (
-        <div>Loading...</div> // Display loading state
+        <Loading /> // Display loading state
       ) : (
         <div>
           {isAuthorized ? (
             <Fragment>
               <h2 style={{ textAlign: "center" }}>My Resume</h2>
-              <div style={{display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", padding: "25px 10px"}}>
+              <div className="res_flex"
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "space-evenly",
+                  padding: "25px 0px",
+                }}
+              >
                 {experiences.length > 0 ? (
                   <section className="timeline">
                     <div className="title-wrapper">
@@ -94,7 +102,7 @@ const Resume = () => {
                             }`}
                           </span>
                           <p className="timeline-text">
-                            {experience.description}
+                            {experience.companyName}
                           </p>
                         </li>
                       ))}
@@ -103,34 +111,34 @@ const Resume = () => {
                 ) : (
                   <div>No experiences data available.</div>
                 )}
-                
+
                 {education.length > 0 ? (
-                <section className="timeline">
-                  <div className="title-wrapper">
-                    <div className="icon-box">
-                      <ion-icon name="book-outline"></ion-icon>{" "}
-                      {/* Your icon */}
-                      <span style={{ textAlign: "center" }}>
-                        &nbsp;&#128218;
-                      </span>{" "}
-                      {/* Fallback icon */}
+                  <section className="timeline">
+                    <div className="title-wrapper">
+                      <div className="icon-box">
+                        <ion-icon name="book-outline"></ion-icon>{" "}
+                        {/* Your icon */}
+                        <span style={{ textAlign: "center" }}>
+                          &nbsp;&#128218;
+                        </span>{" "}
+                        {/* Fallback icon */}
+                      </div>
+                      <h3 className="h3">Education</h3>
                     </div>
-                    <h3 className="h3">Education</h3>
-                  </div>
-                  <ol className="timeline-list">
-                    {education.map((edu) => (
-                      <li key={edu._id} className="timeline-item">
-                        <h4 className="h4 timeline-item-title">{edu.name}</h4>
-                        <span>
-                          {`${edu.startDate.split("-")[0]} — ${
-                            edu.endDate.split("-")[0]
-                          }`}
-                        </span>
-                        <p className="timeline-text">{edu.description}</p>
-                      </li>
-                    ))}
-                  </ol>
-                </section>
+                    <ol className="timeline-list">
+                      {education.map((edu) => (
+                        <li key={edu._id} className="timeline-item">
+                          <h4 className="h4 timeline-item-title">{edu.name}</h4>
+                          <span>
+                            {`${edu.startDate.split("-")[0]} — ${
+                              edu.endDate.split("-")[0]
+                            }`}
+                          </span>
+                          <p className="timeline-text">{edu.description}</p>
+                        </li>
+                      ))}
+                    </ol>
+                  </section>
                 ) : (
                   <div>No education data available.</div>
                 )}
@@ -145,4 +153,4 @@ const Resume = () => {
   );
 };
 
-export default Resume;
+export default ResumePage;

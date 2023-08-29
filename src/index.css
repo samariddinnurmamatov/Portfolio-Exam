@@ -27,3 +27,12 @@ body{
   flex-flow: row wrap;
   min-width: 0;
 }
+
+.slick-prev, .slick-next{
+  background-color: gray !important;
+  border-radius: 20px;
+}
+
+.ant-col{
+  width: 100%;
+}

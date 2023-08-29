@@ -1,19 +1,17 @@
 import {
-  Dashboard,
   Experiences,
-  Messages,
   Portfolios,
   Skills,
   Users,
 } from "../pages/admin";
+import Account from "../pages/admin/Account";
 import Education from "../pages/admin/Education";
 import { ROLE } from "../utils";
-
 const routes = [
   {
-    url: "dashboard",
-    page: Dashboard,
-    label: "Dashboard",
+    url: "Account",
+    page: Account,
+    label: "Account",
   },
   {
     url: "users",
@@ -31,11 +29,6 @@ const routes = [
     label: "Education",
   },
   {
-    url: "messages",
-    page: Messages,
-    label: "Messages",
-  },
-  {
     url: "portfolios",
     page: Portfolios,
     label: "Portfolios",
@@ -46,9 +39,8 @@ const routes = [
     label: "Skills",
   },
 ];
-
 let hiddenRoutes = ROLE === "client" ? ["users"] : [];
-
 export const adminRoutes = routes.filter(
   (route) => !hiddenRoutes.includes(route.url)
 );
+

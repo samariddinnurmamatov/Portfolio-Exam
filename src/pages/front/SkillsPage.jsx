@@ -2,6 +2,7 @@ import { useState, useEffect, Fragment } from "react";
 import { TOKEN } from "../../const";
 import { ROLE, USER_ID } from "../../utils";
 import { toast } from "react-toastify";
+import Loading from "../../components/Loading";
 
 const SkillsPage = () => {
   const [skills, setSkills] = useState([]);
@@ -40,7 +41,7 @@ const SkillsPage = () => {
   return (
     <div className="container" style={{ padding: "100px 15px" }}>
       {isLoading ? (
-        <div>Loading...</div> // Display loading state
+        <Loading /> // Display loading state
       ) : (
         <div>
           {isAuthorized ? (

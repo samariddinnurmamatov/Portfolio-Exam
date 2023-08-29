@@ -39,7 +39,7 @@ const Login = () => {
     // Assuming the server returns a role in the response
     if (res.data.user.role !== "user") {
       // If the user's role is not "user", redirect to the dashboard
-      window.location.href = "/dashboard"; // Yoki kerakli manzilga boshqa URL
+      window.location.href = "/account"; // Yoki kerakli manzilga boshqa URL
       toast.success("Welcome! You have successfully logged in.");
     } else {
       // If the user's role is "user", display an info message

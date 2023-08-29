@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Table, Upload } from "antd";
+import { Avatar, Button, Form, Input, Modal, Table, Upload } from "antd";
 import { useState, useEffect } from "react";
 import {
   DeleteOutlined,
@@ -12,12 +12,17 @@ import { ROLE, USER_ID } from "../../utils";
 import { useFetch } from "../../hook";
 import { IMAGE_URL } from "../../const";
 import { request, requestImage } from "../../server/request";
+import { PlusOutlined } from "@ant-design/icons";
 
 const { confirm } = Modal;
 
 const Portfolios = () => {
   const [current, setCurrentPage] = useState(1);
-  const [save, setSave] = useState([]); // Initialize with an empty array
+  const [selected, setSelected] = useState(null);
+  const [form] = Form.useForm();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [fileList, setFileList] = useState([]); // Store uploaded file list
+
   const {
     data: portfolios,
     loading,
@@ -28,9 +33,6 @@ const Portfolios = () => {
       ROLE === "client" ? `?user[in]=${USER_ID}` : ""
     }&page=${current}&limit=5`
   );
-  const [form] = Form.useForm();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     getPortfolios(); // Fetch portfolios on component mount
@@ -41,6 +43,11 @@ const Portfolios = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: "Url",
@@ -58,12 +65,11 @@ const Portfolios = () => {
       width: 400,
       key: "photo",
       render: (photoUrl) => (
-        <img
-          className="w-50 h-50"
-          src={IMAGE_URL + photoUrl._id + "." + photoUrl.name.split(".")[1]}
+        <Avatar
+          src={`${IMAGE_URL}${photoUrl._id}.${photoUrl.name.split(".")[1]}`}
           alt={photoUrl.name}
-          width="50px"
-          height="50px"
+          shape="square"
+          size={50}
         />
       ),
     },
@@ -88,41 +94,25 @@ const Portfolios = () => {
     },
   ];
 
-  const saveData = (values) => {
-    values["photo"] = save?._id || "";
-    if (selected) {
-      request.put(`portfolios/${selected}`, values).then(() => {
-        getPortfolios();
-        setIsModalOpen(false);
-      });
-    } else {
-      request.post("portfolios", values).then(() => {
-        getPortfolios();
-        setIsModalOpen(false);
-      });
-    }
-  };
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
   const normFile = (e) => {
-    const formData = new FormData();
-    formData.append("file", e.fileList[0].originFileObj);
-    requestImage.post("upload", formData).then((res) => {
-      setSave(res.data); // Store the uploaded file data
-    });
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
   };
 
   const handleOk = () => {
     form.validateFields().then((values) => {
-      values["photo"] = save?._id || "";
+      values["photo"] = fileList[0]?._id || "";
       if (selected) {
         request.put(`portfolios/${selected}`, values).then(() => {
           getPortfolios();
           setIsModalOpen(false);
-          saveData(values);
         });
       } else {
         request.post("portfolios", values).then(() => {
@@ -200,6 +190,26 @@ const Portfolios = () => {
         onCancel={handleCancel}
         okText={selected ? "Save Portfolio" : "Add Portfolio"}
       >
+        <Form.Item
+          name="photo"
+          label="Image"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
+          <Upload
+            name="photo"
+            action="/upload" // Replace with your image upload API endpoint
+            listType="picture"
+            beforeUpload={(file) => {
+              setImageFile(file);
+              return false;
+            }}
+            fileList={fileList}
+          >
+            <Button icon={<InboxOutlined />}>Upload Image</Button>
+          </Upload>
+        </Form.Item>
+
         <Form
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
@@ -208,7 +218,7 @@ const Portfolios = () => {
         >
           <Form.Item
             name="name"
-            label="name"
+            label="Name"
             rules={[
               {
                 message: "The input is not valid Name!",
@@ -222,6 +232,21 @@ const Portfolios = () => {
             <Input placeholder="Name" />
           </Form.Item>
           <Form.Item
+            name="description"
+            label="Description"
+            rules={[
+              {
+                message: "The input is not valid Dame!",
+              },
+              {
+                required: true,
+                message: "Please input your Dame!",
+              },
+            ]}
+          >
+            <Input placeholder="Description" />
+          </Form.Item>
+          <Form.Item
             name="url"
             label="URL"
             rules={[
@@ -231,23 +256,6 @@ const Portfolios = () => {
             ]}
           >
             <Input placeholder="Url" />
-          </Form.Item>
-          <Form.Item label="Dragger">
-            <Form.Item
-              name="photo"
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-              noStyle
-            >
-              <Upload.Dragger multiple>
-                <p className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                </p>
-                <p className="ant-upload-text">
-                  Нажмите или перетащите файлы в эту область для загрузки
-                </p>
-              </Upload.Dragger>
-            </Form.Item>
           </Form.Item>
         </Form>
       </Modal>

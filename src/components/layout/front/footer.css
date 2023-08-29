@@ -13,7 +13,7 @@ footer {
 footer ul {
     display: flex;
     justify-content: center;
-    gap: 25px;
+    gap: 45px;
     color: white;
 }
 footer ul li {
